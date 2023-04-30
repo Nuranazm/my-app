@@ -1,102 +1,102 @@
-import { useState } from "react";
-import "./ExpensesForm.css"
+import React, { useState } from "react";
+import Input from "../UI/Input"
 import Button from "../UI/Button";
+import styled from "styled-components";
 
+ const ExpensesForm = ({ onClick, onNewExpenseAdd }) => {
+  const [inputText, setInputText] = useState("");
+  const [inputNumber, setInputNumber] = useState(0);
+  const [inputDate, setInputDate] = useState("");
 
-const ExpensesForm = ({onClick,onSubmit}) => {
-  const[inputText , setInputText] = useState('')
-  const[inputNumber , setInputNumber] = useState(0)
-  const[inputDate , setInputDate] = useState(null)
-
-  function getInputValue (e) {
-   setInputText(e.target.value)
-   console.log(inputText)
+  function getInputValue(e) {
+    setInputText(e.target.value);
   }
-  function getNumberInput (e) {
-    setInputNumber(e.target.value)
-    console.log(inputNumber)
-}
 
-function getDateInput (e) {
-   setInputDate(e.tearget.value);
-   console.log(inputDate)
-}
-
-
- function sumbitHandler() {
-  const prodacts ={
-    title:inputText,
-    price:inputNumber,
-    date:new Date,
+  function getInputNumber(e) {
+    const value = e.target.value;
+    if (value.charAt(0) !== "-") {
+      setInputNumber(value);
+    }
   }
-onSubmit(prodacts)
 
+  function getInputDate(e) {
+    setInputDate(e.target.value);
+  }
 
-setInputText('');
-setInputNumber('');
-setInputDate('');
+  function submitHandler(event) {
+    event.preventDefault();
+    const product = {
+      title: inputText,
+      price: +inputNumber,
+      date: new Date(inputDate),
+      id: Date.now().toString(),
+    };
 
+    onNewExpenseAdd(product);
 
-console.log('click')
-  
- }
+    console.log(product, "taken");
+  }
 
-     return < >
-      <div className="new-expense_forms">
-            <div className="new-expense_form">
-            <label>Title</label>
-            <input 
-            placeholder="title" 
-            type="text" 
+  return (
+    <div>
+      <FormContainer onSubmit={submitHandler}>
+        <InputDiv>
+          <Input
+            id="1"
+            children="Heading "
+            type="text"
+            placeholder="Heading"
             value={inputText}
             onChange={getInputValue}
-            />
-           </div>
-           </div>
-
-
-         <div className="new-expense_forms">
-           <div className="new-expense_form">
-                <label>Amount</label>
-            <input 
-            placeholder="number" 
+          />
+          <Input
+            id="2"
+            children="Quantity"
             type="number"
-            value={inputNumber} 
-            onChange={getNumberInput}
-            />
-            </div>
-         </div>
-
-
-           <div className="new-expense_forms">
-          <div className="new-expense_form">
-            <label>Date</label>
-            <input 
-            placeholder="date" 
-            type="date" 
-            min='2022-01-01'
-            max='2024-12-21' 
-            />
-            </div>
-            </div>
-
-             <div className ="new-expense_forms">
-             <div className="actions-btn">
-              <button onClick={onClick}>Отмена</button>
-           <button  onClick={sumbitHandler}>Добавить расход</button>
-
-            </div>
-            </div>
-
-
-     </>
-     
-
-
-
-
-        
-     
-}
-
+            placeholder="Quantiy"
+            min="0.01"
+            step="0.01"
+            value={inputNumber}
+            onChange={getInputNumber}
+          />
+          <Input
+            id="3"
+            children="Date"
+            type="date"
+            min="2019-01-01"
+            max="2025-12-31"
+            value={inputDate}
+            onChange={getInputDate}
+          />
+        </InputDiv>
+        <ButtonCont>
+          <Button onClick={onClick}>Cancel</Button>
+          <Button>Add expenses</Button>
+        </ButtonCont>
+      </FormContainer>
+    </div>
+  );
+};
 export default ExpensesForm;
+
+const FormContainer = styled.form`
+  width: 730px;
+  background-color: #ad9be9;
+  border-radius: 12px;
+  padding: 30px 40px;
+  margin-top: 60px;
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+`;

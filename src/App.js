@@ -1,7 +1,10 @@
 import "./App.css";
-import React,{useState} from "react";
+import React,{useEffect, useState,useRef, createRef} from "react";
 import NewExpenses from "./components/newExpenses.js/NewExpenses";
+import Login from "./components/login/Login";
+import Header from "./components/Header/Header";
 import  Expenses  from "./components/expenses/Expenses";
+import Counter from "./components/Test/Counter";
 function App() {
   const [expenses, setExpenses] = useState([
     {
@@ -51,6 +54,72 @@ function App() {
       date: new Date(2020, 0, 16),
     },
   ]);
+ const [isLogin,setIsLogin] = useState(false);
+//  const[color,setColor] = useState('red')
+ const[datas,setDatas]=useState()
+// const currentRef = useRef();
+const someRef = useRef()
+
+
+
+ useEffect (() => {
+  const localIsLogin = localStorage.getItem('Auth')
+  setIsLogin(localIsLogin);
+ },[])
+
+//  useEffect(() => {
+//   currentRef.current = setInterval(() => {
+//     setColor((prev) => {
+//       if(prev === 'red') {
+//         return'black'
+//       }
+//       return'red';
+
+//     })
+//   },1000);
+//   return() => {
+//     clearInterval(currentRef.current);
+//   }
+//  },[]);
+// }
+
+
+useEffect(() => {
+  async function getData() {
+    const response= await fetch(
+      'https://jsonplaceholder.typicode.com/albums'
+      );
+    const dataw=await response.json()
+    setDatas(dataw);
+  }
+  getData();
+  // .then((response) =>response.json())
+  // .then((dataObject) => setData(dataObject))
+},[])
+//  useEffect(() => {
+//      setTimeout(()=>{
+//       clearInterval(currentRef.current)
+//      },3000)
+//  },[])
+
+// function getLocalstorageValue () {
+//  const localIsLogin = localStorage.getItem('Auth')
+//  setIsLogin(localIsLogin)
+
+// }
+  const loginHandler = () =>  {
+         setIsLogin(true)
+         localStorage.setItem('Auth',!isLogin);
+  }
+
+
+function logOutHandler ()  {
+  setIsLogin(false);
+  localStorage.removeItem('Auth')
+}
+
+
+ 
 
   console.log(new Date().getMonth());
 
@@ -62,9 +131,32 @@ function App() {
 
   return (
     <div className="App">
-      <NewExpenses onNewExpenseAdd={addNewExpenseHandler} />
+ 
+ {/* {datas.map((el) => (<div>{el.title}</div>))} */}
 
-      <Expenses setExpenses={setExpenses} expenses={expenses} />
+ 
+      <Header isLogin={isLogin} onLogout={logOutHandler} />
+      <>
+      {isLogin ? ( 
+      <div>
+      <NewExpenses onNewExpenseAdd={addNewExpenseHandler} ref={someRef} />
+      <Expenses 
+      setExpenses={setExpenses} 
+      expenses={expenses} 
+      />
+      </div>
+      
+       ) : (
+        <div>
+      <Login onLogin={loginHandler}/>
+
+      {/* <Counter/> */}
+        </div>
+    
+      ) }
+            {/* <Counter/> */}
+
+      </>
     </div>
   );
 }

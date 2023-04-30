@@ -1,9 +1,31 @@
 import React from "react";
-import "./Button.css"
-const Button = (props) => {
-       return(
-<button style={{marginRight:props.marginRight}} onClick={props.onClick}>{props.children}</button>
-       )
+import styled from 'styled-components'
+
+function Button({ children, ...otherProps }) {
+  return (
+    <div>
+      <Btn {...otherProps}>{children}</Btn>
+    </div>
+  );
 }
 
 export default Button;
+
+const Btn = styled.button`
+  padding: 10px 18px 10px 15px;
+  border-radius: 10px;
+  background-color: #4a026b;
+  border: none;
+  font-size: 17px;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  &:hover {
+    background-color: #861ecbbc;
+    color: rgb(20, 17, 17);
+  }
+  &:active {
+    background-color: #4a026b;
+    color: #ffffff;
+  }
+`;

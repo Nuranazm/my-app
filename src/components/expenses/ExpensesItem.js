@@ -1,37 +1,40 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components"
 
-export const ExpensesCard = ({ el }) => {
+
+ const ExpenseItem = ({ el }) => {
   const dateMonth = new Date(el.date).toLocaleString("en-US", {
     month: "long",
   });
-
   const dateFullYear = new Date(el.date).getFullYear();
   const date = new Date(el.date).getDate();
-
   return (
-    <div>
-      <MainCard>
-        <DateDiv>
-          <span>{dateMonth}</span>
-          <span>{dateFullYear}</span>
+    <>
+      <div>
+        <Card>
+          <DateBlock>
+            <span>{dateMonth}</span>
+            <span>{dateFullYear}</span>
 
-          <DateSpan>{date}</DateSpan>
-        </DateDiv>
-        <Containers>
-          <HeadingTitle>
-            <h2>{el.title}</h2>
-          </HeadingTitle>
-          <PriceCardDiv>
-            <PriceSpan> {el.price}$</PriceSpan>
-          </PriceCardDiv>
-        </Containers>
-      </MainCard>
-    </div>
+            <SpanDate>{date}</SpanDate>
+          </DateBlock>
+          <AllContainers>
+            <CardTitle>
+              <h2>{el.title}</h2>
+            </CardTitle>
+            <PriceCardDiv>
+              <PriceCard >{el.price}$</PriceCard>
+            </PriceCardDiv>
+          </AllContainers>
+        </Card>
+      </div>
+    </>
   );
 };
 
-const MainCard = styled.div`
+export default ExpenseItem;
+
+const Card = styled.div`
   width: 748px;
   height: 110px;
   background: #4b4b4b;
@@ -41,7 +44,7 @@ const MainCard = styled.div`
   margin-left: 17px;
 `;
 
-const DateDiv = styled.div`
+const DateBlock = styled.div`
   color: #ffffff;
   width: 90px;
   height: 90px;
@@ -55,13 +58,11 @@ const DateDiv = styled.div`
   margin-top: 10px;
   margin-left: 1rem;
 `;
-
-const DateSpan = styled.span`
+const SpanDate = styled.span`
   font-weight: 600;
   font-size: 25px;
 `;
-
-const Containers = styled.div`
+const AllContainers = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -69,7 +70,7 @@ const Containers = styled.div`
   align-items: center;
 `;
 
-const HeadingTitle = styled.div`
+const CardTitle = styled.div`
   margin-left: 14px;
   color: #ffffff;
 `;
@@ -84,12 +85,9 @@ const PriceCardDiv = styled.div`
   font-weight: 500;
   border: 1px solid #ffffff;
 `;
-
-const PriceSpan = styled.span`
+const PriceCard = styled.span`
   padding: 10px 18px;
   border-radius: 10px;
   font-weight: bold;
   font-size: 20px;
 `;
-
- 

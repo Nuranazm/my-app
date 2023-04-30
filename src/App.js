@@ -1,54 +1,70 @@
-import './App.css';
-import NewExpense from './components/newExpenses.js/NewExpenses';
-import Expenses from "./components/expenses/Expenses"
-import { useState } from 'react';
-// import ExpensesForm from "./components/newExpenses.js/ExpensesForm"
-
-const productData =[
-  {
-    title:'Alma',
-    price:120,
-    date:new Date(2020,7,14),
-    id:'1'
-  },
-  {
-    title:'Car',
-    price:200,
-    date:new Date(2021,8,15),
-    id:'2' 
-  },
-  {
-    title:'Flower',
-    price:30,
-    date:new Date(2022,9,16),
-    id:'1',
-  },
-];
+import "./App.css";
+import React,{useState} from "react";
+import NewExpenses from "./components/newExpenses.js/NewExpenses";
+import  Expenses  from "./components/expenses/Expenses";
 function App() {
-  const[newProduct,setNewProduct]=useState(productData)
- 
+  const [expenses, setExpenses] = useState([
+    {
+      title: "Dress",
+      price: 450,
+      date: new Date(2023, 2, 19),
+    },
+    {
+      title: "New TV",
+      price: 800,
+      date: new Date(2022, 11, 21),
+    },
+    {
+      title: "Iphone 14 pro Max",
+      price: 1500,
+      date: new Date(2021, 8, 5),
+    },
+    {
+      title: "Gucci bag",
+      price: 990,
+      date: new Date(2020, 1, 17),
+    },
+    {
+      title: "Toilet Paper",
+      price: 300,
+      date: new Date(2022, 8, 9),
+    },
+    {
+      title: "Shoes",
+      price: 780,
+      date: new Date(2021, 1, 27),
+    },
+    {
+      title: "Headphones",
+      price: 220,
+      date: new Date(2019, 7, 14),
+    },
+    {
+      title: "MacBook M2 Air",
+      price: 1980,
+      date: new Date(2023, 7, 31),
+    },
 
-  const addNewExpensesHandler = (data) => {
-   const newArr= [...newProduct,data];
-   setNewProduct(newArr);
-  }
+    {
+      title: "Chocolate-covered Strawberries",
+      price: 340,
+      date: new Date(2020, 0, 16),
+    },
+  ]);
 
+  console.log(new Date().getMonth());
 
-  function deleteExpense (id) {
-    const newData = newProduct.filter((el) => el.id !==id );
-    setNewProduct(newData);   
-  }
-  console.log(newProduct,'arr');
-  
+  const addNewExpenseHandler = (data) => {
+    const updatedExpenses = [...expenses];
+    updatedExpenses.push(data);
+    setExpenses(updatedExpenses);
+  };
+
   return (
     <div className="App">
-      {/* <Input children={"Price"}/>
-      <Button>Click</Button> */}
-       <NewExpense onSubmit={addNewExpensesHandler}/>
-       <button ></button>
-       
-       <Expenses data={newProduct} onDelete={deleteExpense}/>
-       {/* <ExpensesForm/> */}
+      <NewExpenses onNewExpenseAdd={addNewExpenseHandler} />
+
+      <Expenses setExpenses={setExpenses} expenses={expenses} />
     </div>
   );
 }

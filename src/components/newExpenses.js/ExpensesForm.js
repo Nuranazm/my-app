@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Input from "../UI/Input"
 import Button from "../UI/Button";
 import styled from "styled-components";
+import Input from "../UI/Input";
 
  const ExpensesForm = ({ onClick, onNewExpenseAdd }) => {
   const [inputText, setInputText] = useState("");
